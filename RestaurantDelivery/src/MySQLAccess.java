@@ -17,14 +17,14 @@ public class MySQLAccess {
             Class.forName("com.mysql.jdbc.Driver");
             // Setup the connection with the test DataBase - EVERYONE HAS ACCESS, PLEASE BE CAREFUL!!
             // Obviously, if you were distributing this file, you would not include the username and password. There are other ways...
-            connect = DriverManager.getConnection("jdbc:mysql://50.116.3.147/CS485?user=CS485&password=WinonaState");
+            connect = DriverManager.getConnection("jdbc:mysql://50.116.3.147/ai7321lr_RestaurantDelivery?user=in8738bw&password=in8738bw");
                    
                     //+ "jdbc:mysql://54.89.64.80/CS485?user=CS485&password=WinonaState");
 
             // Statements allow to issue SQL queries to the database
             statement = connect.createStatement();
             // Result set get the result of the SQL query
-            resultSet = statement.executeQuery("select * from CS485.Students");
+            resultSet = statement.executeQuery("select * from restaurant");
             writeResultSet(resultSet);
 
         } catch (Exception e) {
@@ -42,14 +42,14 @@ public class MySQLAccess {
             // also possible to get the columns via the column number
             // which starts at 1
             // e.g. resultSet.getSTring(2);
-            String studentID = resultSet.getString("StudentID");
-            String firstName = resultSet.getString("FirstName");
-            String lastName = resultSet.getString("LastName");
+            String restID = resultSet.getString("restID");
+            String restName = resultSet.getString("restName");
+            String restAddressID = resultSet.getString("restAddressID");
             //String departmentID = resultSet.getString("DepartmentID");
             //String advisorID = resultSet.getString("AdvisorID");
-            System.out.println("StudentID: " + studentID);
-            System.out.println("First Name: " + firstName);
-            System.out.println("Last Name: " + lastName);
+            System.out.println("restID: " + restID);
+            System.out.println("rest Name: " + restName);
+            System.out.println("rest AddressID : " + restAddressID);
            // System.out.println("DepartmentID: " + departmentID);
             //System.out.println("AdvisorID: " + advisorID);
         }
