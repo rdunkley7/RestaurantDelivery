@@ -10,6 +10,10 @@ public class testJDBC {
     public static void main(String[] args) throws Exception {
         MySQLAccess dao = new MySQLAccess();
         dao.readDataBase();
+        
+        //test to check customer loginID
+        customer cust = new customer ();
+        cust.readCustomerDB();
     }
 
 }
