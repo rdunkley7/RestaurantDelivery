@@ -12,7 +12,7 @@ public class testJDBC {
         dao.readDataBase();
         
         //test to check customer loginID
-        customer cust = new customer ();
+        Customer cust = new Customer ();
         cust.readCustomerDB();
     }
 

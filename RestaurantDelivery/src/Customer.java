@@ -16,7 +16,7 @@ import java.util.Scanner;
  *
  * @author ai7321lr
  */
-public class customer {
+public class Customer {
 
     //check user to see if in table
     //check login table and customer table
@@ -36,21 +36,39 @@ public class customer {
 
             //PROTECT SQL INJECTION
             //using prepared statments to solve this
-            System.out.println("Enter your email address: ");
+            System.out.print("Enter your email address: ");
             String custEmail = console.next();
-            String query = "select loginID from login where email = ? " ;
+            String query = "select loginID from login where email = ? ";
             PreparedStatement pstmt = connect.prepareStatement(query);
             pstmt.setString(1, custEmail);
             ResultSet results = pstmt.executeQuery();
-            writeResultSet(results);
+
             // Statements allow to issue SQL queries to the database
             //statement = connect.createStatement();
             // Result set get the result of the SQL query
             //resultSet = statement.executeQuery("select loginID from login where email = 'rdunks7@gmail.com'");
-           // writeResultSet(resultSet);
-           
-           
-           
+            // writeResultSet(resultSet);
+            if (results.next() == false) {
+                //query results have no matching tables 
+                //So now ask to create a customer
+                System.out.println("No matching email/login found, please signup and create an account.");
+                createCustomer();
+                
+                
+            } else { //ask for password for login
+//                do {
+//                    String data = results.getString("emp_name");
+//                    System.out.println(data);
+//                } while (results.next());
+//                Read more
+//                : https://javarevisited.blogspot.com/2016/10/how-to-check-if-resultset-is-empty-in-Java-JDBC.html#ixzz5gVqdGOgF
+               
+                writeResultSet(results);
+                System.out.print("Enter password to login: ");
+            }
+
+            //CreateUser createCustomer = new CreateUser();
+            
 
         } catch (Exception e) {
             throw e;
@@ -93,4 +111,10 @@ public class customer {
     }
 
     //create user if not in table
+    public String createCustomer() {
+
+        return "";
+    }
+
+   
 }
