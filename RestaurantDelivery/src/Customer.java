@@ -53,8 +53,7 @@ public class Customer {
                 //So now ask to create a customer
                 System.out.println("No matching email/login found, please signup and create an account.");
                 createCustomer();
-                
-                
+
             } else { //ask for password for login
 //                do {
 //                    String data = results.getString("emp_name");
@@ -62,14 +61,12 @@ public class Customer {
 //                } while (results.next());
 //                Read more
 //                : https://javarevisited.blogspot.com/2016/10/how-to-check-if-resultset-is-empty-in-Java-JDBC.html#ixzz5gVqdGOgF
-               
+
                 writeResultSet(results);
                 System.out.print("Enter password to login: ");
             }
 
             //CreateUser createCustomer = new CreateUser();
-            
-
         } catch (Exception e) {
             throw e;
         } finally {
@@ -113,8 +110,26 @@ public class Customer {
     //create user if not in table
     public String createCustomer() {
 
+        String customerID; // = loginID **SHOULE BE THE SAME THING?? OK ACTUALLY DONT NEED LOGIND
+        String firstName;
+        String lastName;
+        String orderID; // for orderID & table
+        String paymentID = null; //= Payment status - all start as, will be changed later..??
+        String customerAddressID = null; // null for now until they update address info
+        String phoneNumber;
+        
+        System.out.print("Enter a customer ID: ");
+        String custEmail = console.next();
+        System.out.print("Enter a customer ID: ");
+        
+       
+        
+//        String query = "select loginID from login where email = ? ";
+//        PreparedStatement pstmt = connect.prepareStatement(query);
+//        pstmt.setString(1, custEmail);
+//        ResultSet results = pstmt.executeQuery() //INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
+        
         return "";
     }
 
-   
 }
