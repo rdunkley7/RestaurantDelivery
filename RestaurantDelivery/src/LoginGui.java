@@ -1,15 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 
-/**
- *
- * @author ai7321lr
- */
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
+
 public class LoginGui extends javax.swing.JFrame {
+   
+    
     
     
     /**
@@ -17,6 +20,7 @@ public class LoginGui extends javax.swing.JFrame {
      */
     public LoginGui() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -95,14 +99,28 @@ public class LoginGui extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordInputFocusGained
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        // TODO add your handling code here:
+       
         
-        String username = usernameInput.getText();
-        String password = passwordInput.getText();
+        
+        
+        try {
+            // TODO add your handling code here:
+            
+            String username = usernameInput.getText();
+            String password = passwordInput.getText();
+            
+            Customer loginCustomer = new Customer();
+            loginCustomer.readCustomerDB();
+        } catch (Exception ex) {
+            Logger.getLogger(LoginGui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         
         
     }//GEN-LAST:event_loginBtnActionPerformed
 
+   
+    
     /**
      * @param args the command line arguments
      */
@@ -129,6 +147,7 @@ public class LoginGui extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(LoginGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
