@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author ai7321lr
  */
-public class Customer {
+public class Customer extends LoginGui{
 
     //check user to see if in table
     //check login table and customer table
@@ -38,7 +38,13 @@ public class Customer {
 
             //PROTECT SQL INJECTION
             //using prepared statments to solve this
-            System.out.print("Enter your email address: ");
+         //   String username = usernameInput.getText();
+          //  String password = passwordInput.getText();
+            
+            Customer loginCustomer = new Customer();
+            loginCustomer.readCustomerDB();
+            
+            System.out.print("Enter your email: ");
             String custEmail = console.next();
             String query = "select loginID from login where email = ? ";
             PreparedStatement pstmt = connect.prepareStatement(query);
