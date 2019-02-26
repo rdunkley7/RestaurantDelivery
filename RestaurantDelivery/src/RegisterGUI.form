@@ -43,9 +43,9 @@
                   <Component id="passwordField" alignment="0" max="32767" attributes="0"/>
                   <Component id="firstNameField" alignment="0" max="32767" attributes="0"/>
                   <Component id="lastNameField" alignment="0" max="32767" attributes="0"/>
-                  <Component id="creditCardField" alignment="0" pref="145" max="32767" attributes="0"/>
+                  <Component id="phoneField" alignment="0" pref="145" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="134" max="32767" attributes="0"/>
+              <EmptySpace pref="163" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -85,7 +85,7 @@
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="creditCardField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="phoneField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="registerButton" min="-2" max="-2" attributes="0"/>
@@ -100,7 +100,7 @@
         <Property name="text" type="java.lang.String" value="First Name:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="creditCardField">
+    <Component class="javax.swing.JTextField" name="phoneField">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
@@ -132,7 +132,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Creditcard number:"/>
+        <Property name="text" type="java.lang.String" value="Phone Number"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="usernameField">

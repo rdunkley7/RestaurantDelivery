@@ -1,5 +1,7 @@
 
-
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
@@ -8,17 +10,12 @@ import javax.swing.JOptionPane;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author rdunkley13
  */
 public class RegisterGUI extends javax.swing.JFrame {
 
-    
-    
-    
-    
     /**
      * Creates new form RegisterGUI
      */
@@ -36,7 +33,7 @@ public class RegisterGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        creditCardField = new javax.swing.JTextField();
+        phoneField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         registerButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -68,7 +65,7 @@ public class RegisterGUI extends javax.swing.JFrame {
 
         jLabel5.setText("Password: ");
 
-        jLabel6.setText("Creditcard number:");
+        jLabel6.setText("Phone Number");
 
         usernameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,8 +95,8 @@ public class RegisterGUI extends javax.swing.JFrame {
                     .addComponent(passwordField)
                     .addComponent(firstNameField)
                     .addComponent(lastNameField)
-                    .addComponent(creditCardField, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
-                .addContainerGap(134, Short.MAX_VALUE))
+                    .addComponent(phoneField, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
+                .addContainerGap(163, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,7 +127,7 @@ public class RegisterGUI extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(creditCardField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(registerButton)
                 .addContainerGap(45, Short.MAX_VALUE))
@@ -141,26 +138,33 @@ public class RegisterGUI extends javax.swing.JFrame {
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         // TODO add your handling code here:
-        
+
         Customer customer = new Customer();
-        
-        
-        String username = usernameField.getText();
+
+        String customerID = usernameField.getText();
         String password = passwordField.getText();
+        //NOW Create/add to login table!!! ***** 
 
         String firstName = firstNameField.getText();
         String lastName = lastNameField.getText();
         int zipcode = Integer.parseInt(zipcodeField.getText());
-        String creditNumber = creditCardField.getText();
 
-        
+        String phoneNumber = phoneField.getText();
+        //WILl also need to add to customer address table
+        try {
+            //createLogin(customerID, email, password);
+            customer.createCustomer(customerID, password, firstName, lastName, phoneNumber);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(RegisterGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         JOptionPane.showMessageDialog(null, "Thanks for registering!");
-
-        LoginGui loginGUI = new LoginGui();
-        loginGUI.setVisible(true);
-
-        this.dispose();
+//
+//        LoginGui loginGUI = new LoginGui();
+//        loginGUI.setVisible(true);
+//
+//        this.dispose();
     }//GEN-LAST:event_registerButtonActionPerformed
 
     private void usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameFieldActionPerformed
@@ -203,7 +207,6 @@ public class RegisterGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField creditCardField;
     private javax.swing.JTextField firstNameField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -213,6 +216,7 @@ public class RegisterGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField lastNameField;
     private javax.swing.JPasswordField passwordField;
+    private javax.swing.JTextField phoneField;
     private javax.swing.JButton registerButton;
     private javax.swing.JTextField usernameField;
     private javax.swing.JTextField zipcodeField;
