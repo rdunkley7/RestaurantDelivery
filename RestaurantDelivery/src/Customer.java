@@ -128,20 +128,21 @@ public class Customer extends LoginGui{
             // Obviously, if you were distributing this file, you would not include the username and password. There are other ways...
             connect = DriverManager.getConnection("jdbc:mysql://50.116.3.147/ai7321lr_RestaurantDelivery?user=in8738bw&password=in8738bw");
 
-            String query = "INSERT INTO customer (?, ?, ?, ?, ?, ?, ?)";
-            //String query = "select loginID from login where email = ? ";
+            String query = "INSERT INTO customer (customerID, firstName, lastname, orderID, paymentID , customerAddressID, phoneNumber)"
+                    + "VALUES (?,?,?,?,?,?,?)";
+           
             PreparedStatement pstmt = connect.prepareStatement(query);
             pstmt.setString(1, customerID);
-//        pstmt.setString(2, firstName);
-//        pstmt.setString(3, lastName);
-//        pstmt.setString(4, "");
-//        pstmt.setString(5, "");
-//        pstmt.setString(6, "");
-//        pstmt.setString(7, phoneNumber);
-            ResultSet results = pstmt.executeQuery();
+            pstmt.setString(2, firstName);
+            pstmt.setString(3, lastName);
+            pstmt.setString(4, "");             //Add values to these when order is updated 
+            pstmt.setString(5, "");
+            pstmt.setString(6, "");
+            pstmt.setString(7, phoneNumber);
+            int resultsint = pstmt.executeUpdate();
 
             System.out.println("Query was executed...");
-            System.out.println(results);
+            System.out.println(resultsint);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
         }
