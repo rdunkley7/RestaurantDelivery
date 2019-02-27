@@ -160,11 +160,10 @@ public class RegisterGUI extends javax.swing.JFrame {
         }
 
         JOptionPane.showMessageDialog(null, "Thanks for registering!");
-//
-//        LoginGui loginGUI = new LoginGui();
-//        loginGUI.setVisible(true);
-//
-//        this.dispose();
+        LoginGui loginGUI = new LoginGui();
+        loginGUI.setVisible(true);
+
+        this.dispose();
     }//GEN-LAST:event_registerButtonActionPerformed
 
     private void usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameFieldActionPerformed
