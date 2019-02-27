@@ -115,7 +115,7 @@ public class Customer extends LoginGui{
     }
 
     //create user if not in table
-    public void createCustomer(String customerID, String password, String firstName, String lastName, String phoneNumber) throws SQLException {
+    public void createCustomer(String customerID, String firstName, String lastName, String phoneNumber) throws SQLException {
 
         try {
             //All other fields null until changed later..?
