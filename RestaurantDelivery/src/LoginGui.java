@@ -1,26 +1,20 @@
 
+import com.mysql.jdbc.Connection;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Scanner;
+import javax.swing.JOptionPane;
+
 
 public class LoginGui extends javax.swing.JFrame {
-   
-    
-    
-    
+ 
     /**
      * Creates new form LoginGui
      */
     public LoginGui() {
         initComponents();
-        setLocationRelativeTo(null);
+
     }
 
     /**
@@ -32,11 +26,19 @@ public class LoginGui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jColorChooser1 = new javax.swing.JColorChooser();
         usernameInput = new javax.swing.JTextField();
         passwordInput = new javax.swing.JPasswordField();
         loginBtn = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextPane1 = new javax.swing.JTextPane();
+        signUpBtn = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(102, 204, 255));
 
         usernameInput.setText("Username");
         usernameInput.setActionCommand("<Not Set>");
@@ -60,6 +62,30 @@ public class LoginGui extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jLabel1.setText("Returning Users:");
+        jLabel1.setToolTipText("");
+
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jLabel2.setText("Restaurant Delivery");
+
+        jScrollPane2.setBorder(null);
+
+        jTextPane1.setBackground(javax.swing.UIManager.getDefaults().getColor("window"));
+        jTextPane1.setBorder(null);
+        jTextPane1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jTextPane1.setText("New to us? Click the button below to sign up and start ordering!");
+        jScrollPane2.setViewportView(jTextPane1);
+
+        signUpBtn.setText("SIGN ME UP");
+        signUpBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signUpBtnActionPerformed(evt);
+            }
+        });
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -67,27 +93,54 @@ public class LoginGui extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(loginBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(passwordInput, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
-                        .addComponent(usernameInput)))
-                .addContainerGap(240, Short.MAX_VALUE))
+                    .addComponent(loginBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(passwordInput)
+                    .addComponent(usernameInput)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(signUpBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(13, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(79, 79, 79)
+                .addComponent(jLabel2)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(78, 78, 78)
-                .addComponent(usernameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(passwordInput, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(loginBtn)
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(usernameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(passwordInput, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(loginBtn)
+                            .addComponent(signUpBtn)))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void usernameInputFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usernameInputFocusGained
         // TODO add your handling code here:
         usernameInput.setText("");
@@ -99,32 +152,60 @@ public class LoginGui extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordInputFocusGained
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-       
-        
-        
-        
-        try {
-            // TODO add your handling code here:
-            
-            String username = usernameInput.getText();
-            String password = passwordInput.getText();
-            
-            Customer loginCustomer = new Customer();
-            loginCustomer.readCustomerDB();
-        } catch (Exception ex) {
-            Logger.getLogger(LoginGui.class.getName()).log(Level.SEVERE, null, ex);
+        if(usernameInput.getText().length() == 0)
+            JOptionPane.showMessageDialog(null,"You need to enter a username");
+        else if(passwordInput.getPassword().length == 0)
+            JOptionPane.showMessageDialog(null, "You need to enter a password");
+        else {
+            String user = usernameInput.getText();
+            char [] pass = passwordInput.getPassword();
+            String pwd = String.copyValueOf(pass);
+            if(validate_login(user,pwd))
+                JOptionPane.showMessageDialog(null, "Sucessful!");
+            else
+                JOptionPane.showMessageDialog(null, "Incorrect username and/or password");
         }
         
-        
+        RestaurantsGUI restaurantsGUI = new RestaurantsGUI();
+        restaurantsGUI.setVisible(true);
+        this.dispose();
         
     }//GEN-LAST:event_loginBtnActionPerformed
 
-   
+    private void signUpBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpBtnActionPerformed
+        // TODO add your handling code here:
+        RegisterGUI registerGUI = new RegisterGUI();
+        registerGUI.setVisible(true);
+        
+        this.dispose();
+        
+    }//GEN-LAST:event_signUpBtnActionPerformed
+
+    private boolean validate_login(String username, String password){
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            java.sql.Connection connect = DriverManager.getConnection("jdbc:mysql://50.116.3.147/ai7321lr_RestaurantDelivery?user=in8738bw&password=in8738bw");
+            PreparedStatement pst = connect.prepareStatement("Select * from login where customerID=? and password=?");
+            pst.setString(1, username);
+            pst.setString(2, password);
+            ResultSet resultSet = pst.executeQuery();
+            if(resultSet.next())
+                return true;
+            else
+                return false;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+    
+    
+/**
+ * @param args the command line arguments
+ */
+public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -135,16 +216,28 @@ public class LoginGui extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                }
+                
+
+}
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginGui.class
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        
+
+} catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(LoginGui.class
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        
+
+} catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(LoginGui.class
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        
+
+} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(LoginGui.class
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         
@@ -158,8 +251,15 @@ public class LoginGui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JColorChooser jColorChooser1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTextPane jTextPane1;
     private javax.swing.JButton loginBtn;
     private javax.swing.JPasswordField passwordInput;
+    private javax.swing.JButton signUpBtn;
     private javax.swing.JTextField usernameInput;
     // End of variables declaration//GEN-END:variables
 }
