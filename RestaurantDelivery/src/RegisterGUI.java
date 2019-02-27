@@ -211,7 +211,7 @@ public class RegisterGUI extends javax.swing.JFrame {
         //WILl also need to add to customer address table
         try {
             loginObj.createLogin(customerID, email, password);
-            customerObj.createCustomer(customerID, password, firstName, lastName, phoneNumber);
+            customerObj.createCustomer(customerID, firstName, lastName, phoneNumber);
             addressObj.createCustomerAddress(customerID, address, city, zipcode);
             
         } catch (SQLException ex) {
