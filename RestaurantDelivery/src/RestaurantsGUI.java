@@ -89,43 +89,26 @@ public class RestaurantsGUI extends javax.swing.JFrame {
     private void restaurantComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restaurantComboBoxActionPerformed
         // TODO add your handling code here:
         int x = restaurantComboBox.getSelectedIndex();
-
+        //String comboName = restaurantComboBox.getname();
+        String restName = restaurantComboBox.getSelectedItem().toString();
+        
         Restaurant restaurant = new Restaurant();
-        if (x == 1) {
+       
             try {
                 //first selection can be mexican for now
-                String restName = "Mexican"; //restaurantComboBox.getName();
+                
 
                 //call restaruarnt from db to read the menu then print results
                 ResultSet menuResult = restaurant.readMenu(restName);
-                
-                resultTextArea.append("Menu: ");
-                //writeRestaurantResultSet(menuResult);
-                
-                while (menuResult.next()) {
-                    // It is possible to get the columns via name
-                    // also possible to get the columns via the column number
-                    // which starts at 1
-                    // e.g. resultSet.getSTring(2);
-                    resultTextArea.append("menuItemID");
-                    String menuItemID = menuResult.getString("menuItemID");
-                    String menuItemName = menuResult.getString("menuItemName");
-                    String menuItemDesc = menuResult.getString("menuItemDescription");
-                    String menuItemPrice = menuResult.getString("menuItemPrice");
-                    String restID = menuResult.getString("restID");
-
-                    resultTextArea.append("menuItemID: " + menuItemID);
-                    resultTextArea.append("menuItemName: " + menuItemName);
-                    resultTextArea.append("menuItemDesc : " + menuItemDesc);
-                    resultTextArea.append("menuItemPrice : " + menuItemPrice);
-                    resultTextArea.append("restID : " + restID);
-                }
-
+                resultTextArea.append(restName + " menu: ");
+                writeRestaurantResultSet(menuResult);
+  
                 }catch(Exception e){
                 e.printStackTrace();
-            }
-
-            }
+            
+                }
+            
+        
     }//GEN-LAST:event_restaurantComboBoxActionPerformed
 
     /**
@@ -163,26 +146,27 @@ public class RestaurantsGUI extends javax.swing.JFrame {
         });
     }
 
-    public void writeRestaurantResultSet(ResultSet resultSet) throws SQLException {
+    public void writeRestaurantResultSet(ResultSet menuResult) throws SQLException {
         // ResultSet is initially before the first data set
-        while (resultSet.next()) {
-            // It is possible to get the columns via name
-            // also possible to get the columns via the column number
-            // which starts at 1
-            // e.g. resultSet.getSTring(2);
+        while (menuResult.next()) {
+            
 
-            String menuItemID = resultSet.getString("menuItemID");
-            String menuItemName = resultSet.getString("menuItemName");
-            String menuItemDesc = resultSet.getString("menuItemDescription");
-            String menuItemPrice = resultSet.getString("menuItemPrice");
-            String restID = resultSet.getString("restID");
+            while (menuResult.next()) {
+                   
+                    resultTextArea.append("menuItemID");
+                    String menuItemID = menuResult.getString("menuItemID");
+                    String menuItemName = menuResult.getString("menuItemName");
+                    String menuItemDesc = menuResult.getString("menuItemDescription");
+                    String menuItemPrice = menuResult.getString("menuItemPrice");
+                    String restID = menuResult.getString("restID");
 
-            System.out.print("menuItemID: " + menuItemID);
-            System.out.print("menuItemName: " + menuItemName);
-            System.out.print("menuItemDesc : " + menuItemDesc);
-            System.out.print("menuItemPrice : " + menuItemPrice);
-            System.out.print("restID : " + restID);
-            System.out.print("\n");
+                    resultTextArea.append("menuItemID: " + menuItemID);
+                    resultTextArea.append("menuItemName: " + menuItemName);
+                    resultTextArea.append("menuItemDesc : " + menuItemDesc);
+                    resultTextArea.append("menuItemPrice : " + menuItemPrice);
+                    resultTextArea.append("restID : " + restID);
+                    resultTextArea.append("\n");
+                }
         }
     }
 

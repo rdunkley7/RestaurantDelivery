@@ -35,26 +35,26 @@ public class Restaurant extends JFrame{
     public ResultSet readMenu(String restName) throws Exception {
         try {
 
-            String restID = "MexianRest";
+            
             // This will load the MySQL driver, each DB has its own driver
             Class.forName("com.mysql.jdbc.Driver");
             java.sql.Connection connect = DriverManager.getConnection("jdbc:mysql://50.116.3.147/ai7321lr_RestaurantDelivery?user=in8738bw&password=in8738bw");
 
-            String query = "select * from menuItem where restID = 'MexicanRest'  ";
-            //SELECT * FROM `menuItem` WHERE restID = "MexicanRest"
-//            PreparedStatement pstmt = connect.prepareStatement(query);
-//            //PreparedStatement pst = connect.prepareStatement("select * crom menuItem where menuItem.restID = ? ");
-//                    //+ "(SELECT restID FROM restaurant WHERE restaurant.restName = ?)");
-//            pstmt.setString(1, restID);
-//            ResultSet resultSet = pstmt.executeQuery();
+            String query = "select * from menuItem where restID = "
+                             + "(select restID from restaurant where restaurant.restName = ?)";
 
-            // writeResultSet(resultSet);
-            statement = connect.createStatement();
-            // Result set get the result of the SQL query
-            resultSet = statement.executeQuery(query);
+
+            PreparedStatement pstmt = connect.prepareStatement(query);
+           
+            pstmt.setString(1, restName);
+            ResultSet resultSet = pstmt.executeQuery();
+
+//            // writeResultSet(resultSet);
+//            statement = connect.createStatement();
+//            // Result set get the result of the SQL query
+//            resultSet = statement.executeQuery(query);
             
-            
-            //writeResultSet(resultSet);
+           
             return resultSet;
             
         } catch (Exception e) {
@@ -67,29 +67,29 @@ public class Restaurant extends JFrame{
 
     }
 
-    public void writeResultSet(ResultSet resultSet) throws SQLException {
-        // ResultSet is initially before the first data set
-        while (resultSet.next()) {
-            // It is possible to get the columns via name
-            // also possible to get the columns via the column number
-            // which starts at 1
-            // e.g. resultSet.getSTring(2);
-
-            String menuItemID = resultSet.getString("menuItemID");
-            String menuItemName = resultSet.getString("menuItemName");
-            String menuItemDesc = resultSet.getString("menuItemDescription");
-            String menuItemPrice = resultSet.getString("menuItemPrice");
-            String restID = resultSet.getString("restID");
-
-            System.out.print("menuItemID: " + menuItemID);
-            System.out.print("menuItemName: " + menuItemName);
-            System.out.print("menuItemDesc : " + menuItemDesc);
-            System.out.print("menuItemPrice : " + menuItemPrice);
-            System.out.print("restID : " + restID);
-            System.out.print("\n");
-
-        }
-    }
+//    public void writeResultSet(ResultSet resultSet) throws SQLException {
+//        // ResultSet is initially before the first data set
+//        while (resultSet.next()) {
+//            // It is possible to get the columns via name
+//            // also possible to get the columns via the column number
+//            // which starts at 1
+//            // e.g. resultSet.getSTring(2);
+//
+//            String menuItemID = resultSet.getString("menuItemID");
+//            String menuItemName = resultSet.getString("menuItemName");
+//            String menuItemDesc = resultSet.getString("menuItemDescription");
+//            String menuItemPrice = resultSet.getString("menuItemPrice");
+//            String restID = resultSet.getString("restID");
+//
+//            System.out.print("menuItemID: " + menuItemID);
+//            System.out.print("menuItemName: " + menuItemName);
+//            System.out.print("menuItemDesc : " + menuItemDesc);
+//            System.out.print("menuItemPrice : " + menuItemPrice);
+//            System.out.print("restID : " + restID);
+//            System.out.print("\n");
+//
+//        }
+//    }
 
     // You need to close the resultSet
     private void close() {
