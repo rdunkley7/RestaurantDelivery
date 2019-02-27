@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +25,7 @@ public class Login {
     private Statement statement = null;
     private ResultSet resultSet = null;
     Scanner console = new Scanner(System.in);
-
+   
     //create user if not in table
     public void createLogin(String customerID, String email, String password) throws SQLException {
 
@@ -32,7 +33,7 @@ public class Login {
             
             //HASH THE PASSWORD.. upon creating the user login 
             //then put hashed password into the DB
-           
+         
             Class.forName("com.mysql.jdbc.Driver");
             // Setup the connection with the test DataBase - EVERYONE HAS ACCESS, PLEASE BE CAREFUL!!
             // Obviously, if you were distributing this file, you would not include the username and password. There are other ways...

@@ -40,7 +40,7 @@ public class Address {
             connect = DriverManager.getConnection("jdbc:mysql://50.116.3.147/ai7321lr_RestaurantDelivery?user=in8738bw&password=in8738bw");
 
             String query = "INSERT INTO login (customerID, customerAddressID, address, city, zipcode)"
-                    + "VALUES (?,?,?,?,?,?,?)";
+                    + "VALUES (?,?,?,?,?)";
 
             PreparedStatement pstmt = connect.prepareStatement(query);
             pstmt.setString(1, customerID);
@@ -69,8 +69,8 @@ public class Address {
             Class.forName("com.mysql.jdbc.Driver");
             connect = DriverManager.getConnection("jdbc:mysql://50.116.3.147/ai7321lr_RestaurantDelivery?user=in8738bw&password=in8738bw");
 
-            String query = "INSERT INTO restaurantAddress (customerID, restAddressID, number, street, city, zipcode, state)"
-                    + "VALUES (?,?,?,?,?,?,?)";
+            String query = "INSERT INTO restaurantAddress (customerID, restAddressID, address, city, zipcode)"
+                    + "VALUES (?,?,?,?,?)";
 
             PreparedStatement pstmt = connect.prepareStatement(query);
             pstmt.setString(1, restID);
