@@ -2,13 +2,13 @@
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author ai7321lr
@@ -34,8 +34,8 @@ public class RestaurantsGUI extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
         restaurantComboBox = new javax.swing.JComboBox<>();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        resultArea = new javax.swing.JTextPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        resultTextArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,7 +51,9 @@ public class RestaurantsGUI extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane2.setViewportView(resultArea);
+        resultTextArea.setColumns(20);
+        resultTextArea.setRows(5);
+        jScrollPane3.setViewportView(resultTextArea);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -62,22 +64,23 @@ public class RestaurantsGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(restaurantComboBox, 0, 208, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57)
-                .addComponent(restaurantComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(37, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57)
+                        .addComponent(restaurantComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -86,26 +89,48 @@ public class RestaurantsGUI extends javax.swing.JFrame {
     private void restaurantComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restaurantComboBoxActionPerformed
         // TODO add your handling code here:
         int x = restaurantComboBox.getSelectedIndex();
-        if(x == 1){
-            try{
-                Class.forName("com.mysql.jdbc.Driver");
-                java.sql.Connection connect = DriverManager.getConnection("jdbc:mysql://50.116.3.147/ai7321lr_RestaurantDelivery?user=in8738bw&password=in8738bw");
-                PreparedStatement pst = connect.prepareStatement("Select * from menuOrder where restID=MexicanRest");
-                pst.setString(1, restaurantComboBox.getName());
-                ResultSet resultSet = pst.executeQuery();
-                resultArea.setText(pst.toString());
+
+        Restaurant restaurant = new Restaurant();
+        if (x == 1) {
+            try {
+                //first selection can be mexican for now
+                String restName = "Mexican"; //restaurantComboBox.getName();
+
+                //call restaruarnt from db to read the menu then print results
+                ResultSet menuResult = restaurant.readMenu(restName);
                 
-            }
-            catch(Exception e){
+                resultTextArea.append("Menu: ");
+                //writeRestaurantResultSet(menuResult);
+                
+                while (menuResult.next()) {
+                    // It is possible to get the columns via name
+                    // also possible to get the columns via the column number
+                    // which starts at 1
+                    // e.g. resultSet.getSTring(2);
+                    resultTextArea.append("menuItemID");
+                    String menuItemID = menuResult.getString("menuItemID");
+                    String menuItemName = menuResult.getString("menuItemName");
+                    String menuItemDesc = menuResult.getString("menuItemDescription");
+                    String menuItemPrice = menuResult.getString("menuItemPrice");
+                    String restID = menuResult.getString("restID");
+
+                    resultTextArea.append("menuItemID: " + menuItemID);
+                    resultTextArea.append("menuItemName: " + menuItemName);
+                    resultTextArea.append("menuItemDesc : " + menuItemDesc);
+                    resultTextArea.append("menuItemPrice : " + menuItemPrice);
+                    resultTextArea.append("restID : " + restID);
+                }
+
+                }catch(Exception e){
                 e.printStackTrace();
             }
-     
-        }
+
+            }
     }//GEN-LAST:event_restaurantComboBoxActionPerformed
 
     /**
-     * @param args the command line arguments
-     */
+         * @param args the command line arguments
+         */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -138,11 +163,34 @@ public class RestaurantsGUI extends javax.swing.JFrame {
         });
     }
 
+    public void writeRestaurantResultSet(ResultSet resultSet) throws SQLException {
+        // ResultSet is initially before the first data set
+        while (resultSet.next()) {
+            // It is possible to get the columns via name
+            // also possible to get the columns via the column number
+            // which starts at 1
+            // e.g. resultSet.getSTring(2);
+
+            String menuItemID = resultSet.getString("menuItemID");
+            String menuItemName = resultSet.getString("menuItemName");
+            String menuItemDesc = resultSet.getString("menuItemDescription");
+            String menuItemPrice = resultSet.getString("menuItemPrice");
+            String restID = resultSet.getString("restID");
+
+            System.out.print("menuItemID: " + menuItemID);
+            System.out.print("menuItemName: " + menuItemName);
+            System.out.print("menuItemDesc : " + menuItemDesc);
+            System.out.print("menuItemPrice : " + menuItemPrice);
+            System.out.print("restID : " + restID);
+            System.out.print("\n");
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JComboBox<String> restaurantComboBox;
-    private javax.swing.JTextPane resultArea;
+    private javax.swing.JTextArea resultTextArea;
     // End of variables declaration//GEN-END:variables
 }
