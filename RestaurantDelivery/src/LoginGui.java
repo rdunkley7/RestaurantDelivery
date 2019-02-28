@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 
 public class LoginGui extends javax.swing.JFrame {
  
+    
+    Login login = new Login();
     /**
      * Creates new form LoginGui
      */
@@ -159,6 +161,9 @@ public class LoginGui extends javax.swing.JFrame {
         else {
             String user = usernameInput.getText();
             char [] pass = passwordInput.getPassword();
+            
+            
+            
             String pwd = String.copyValueOf(pass);
             if(validate_login(user,pwd))
                 JOptionPane.showMessageDialog(null, "Sucessful!");
@@ -188,6 +193,20 @@ public class LoginGui extends javax.swing.JFrame {
             PreparedStatement pst = connect.prepareStatement("Select * from login where customerID=? and password=?");
             pst.setString(1, username);
             pst.setString(2, password);
+            
+            
+        String salt = login.generateSalt(512).get();
+        System.out.println("salt: " + salt);
+        System.out.println("\n");
+   
+        //key is secured password
+        String key = login.hashPassword(password, salt).get();
+        System.out.println("key: " +key);
+        System.out.println("\n");
+        
+        System.out.println(login.verifyPassword("1234", key, salt));
+        System.out.println(login.verifyPassword("4321", key, salt));
+            
             ResultSet resultSet = pst.executeQuery();
             if(resultSet.next())
                 return true;
