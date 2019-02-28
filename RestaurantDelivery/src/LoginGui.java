@@ -6,11 +6,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
-
 public class LoginGui extends javax.swing.JFrame {
- 
-    
+
     PasswordUtils passwordUtils = new PasswordUtils();
+
     /**
      * Creates new form LoginGui
      */
@@ -142,7 +141,7 @@ public class LoginGui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+
     private void usernameInputFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usernameInputFocusGained
         // TODO add your handling code here:
         usernameInput.setText("");
@@ -154,77 +153,76 @@ public class LoginGui extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordInputFocusGained
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        if(usernameInput.getText().length() == 0)
-            JOptionPane.showMessageDialog(null,"You need to enter a username");
-        else if(passwordInput.getPassword().length == 0)
+        if (usernameInput.getText().length() == 0) {
+            JOptionPane.showMessageDialog(null, "You need to enter a username");
+        } else if (passwordInput.getPassword().length == 0) {
             JOptionPane.showMessageDialog(null, "You need to enter a password");
-        else {
+        } else {
             String user = usernameInput.getText();
-            char [] pass = passwordInput.getPassword();
-            
-            
-            
+            char[] pass = passwordInput.getPassword();
+
             String pwd = String.copyValueOf(pass);
-            if(validate_login(user,pwd))
+            if (validate_login(user, pwd)) {
                 JOptionPane.showMessageDialog(null, "Sucessful!");
-            else
+            } else {
                 JOptionPane.showMessageDialog(null, "Incorrect username and/or password");
+            }
         }
-        
+
         RestaurantsGUI restaurantsGUI = new RestaurantsGUI();
         restaurantsGUI.setVisible(true);
         this.dispose();
-        
+
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void signUpBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpBtnActionPerformed
         // TODO add your handling code here:
         RegisterGUI registerGUI = new RegisterGUI();
         registerGUI.setVisible(true);
-        
+
         this.dispose();
-        
+
     }//GEN-LAST:event_signUpBtnActionPerformed
 
-    private boolean validate_login(String username, String password){
-        try{
+    private boolean validate_login(String username, String password) {
+        try {
             Class.forName("com.mysql.jdbc.Driver");
             java.sql.Connection connect = DriverManager.getConnection("jdbc:mysql://50.116.3.147/ai7321lr_RestaurantDelivery?user=in8738bw&password=in8738bw");
             PreparedStatement pst = connect.prepareStatement("Select * from login where customerID=? and password=?");
             pst.setString(1, username);
             pst.setString(2, password);
-            
-            
-        String salt = passwordUtils.generateSalt(512).get();
-        System.out.println("salt: " + salt);
-        System.out.println("\n");
-   
-        //key is secured password
-        String key = passwordUtils.hashPassword(password, salt).get();
-        System.out.println("key: " +key);
-        System.out.println("\n");
-        
-        System.out.println(passwordUtils.verifyPassword("1234", key, salt));
-        System.out.println(passwordUtils.verifyPassword("4321", key, salt));
-            
             ResultSet resultSet = pst.executeQuery();
-            if(resultSet.next())
+
+            ///need to fix next^^. Above reads from db based on user entry.. but pw entered will need varification first
+            //then compare the secured/hashed pw with the one retrieved from db (rather than one typed like above)
+            //
+            String salt = passwordUtils.generateSalt(512).get();
+            System.out.println("salt: " + salt);
+            System.out.println("\n");
+
+            //key is the secured password to be stored in db
+            String key = passwordUtils.hashPassword(password, salt).get();
+            System.out.println("key: " + key);
+            System.out.println("\n");
+
+            if ((passwordUtils.verifyPassword(password, key, salt)) == true) {
+                System.out.println("Password validated");
                 return true;
-            else
+            } else {
+                System.out.println("Password incorrect");
                 return false;
-        }
-        catch(Exception e){
+            }
+
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
-    
-    
-    
-/**
- * @param args the command line arguments
- */
-public static void main(String args[]) {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -235,31 +233,27 @@ public static void main(String args[]) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                
 
-}
+                }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(LoginGui.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-} catch (InstantiationException ex) {
+        } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(LoginGui.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-} catch (IllegalAccessException ex) {
+        } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(LoginGui.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(LoginGui.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

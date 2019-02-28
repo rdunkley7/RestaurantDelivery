@@ -39,15 +39,14 @@ public class Address {
             // Obviously, if you were distributing this file, you would not include the username and password. There are other ways...
             connect = DriverManager.getConnection("jdbc:mysql://50.116.3.147/ai7321lr_RestaurantDelivery?user=in8738bw&password=in8738bw");
 
-            String query = "INSERT INTO login (customerID, customerAddressID, address, city, zipcode)"
-                    + "VALUES (?,?,?,?,?)";
+            String query = "INSERT INTO login (customerID, address, city, zipcode)"
+                    + "VALUES (?,?,?,?)";
 
             PreparedStatement pstmt = connect.prepareStatement(query);
             pstmt.setString(1, customerID);
-            pstmt.setString(2, customerAddressID);
-            pstmt.setString(3, address);
-            pstmt.setString(4, city);
-            pstmt.setInt(5, zipcode);
+            pstmt.setString(2, address);
+            pstmt.setString(3, city);
+            pstmt.setInt(4, zipcode);
           
             
             int resultsint = pstmt.executeUpdate();

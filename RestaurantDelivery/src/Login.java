@@ -32,6 +32,7 @@ public class Login {
     private Statement statement = null;
     private ResultSet resultSet = null;
     Scanner console = new Scanner(System.in);
+    PasswordUtils passwordUtils = new PasswordUtils();
 
     //create user if not in table
     public void createLogin(String customerID, String email, String password) throws SQLException {
@@ -39,7 +40,18 @@ public class Login {
         try {
 
             //HASH THE PASSWORD.. upon creating the user login 
-            //then put hashed password into the DB
+            
+            String salt = passwordUtils.generateSalt(512).get();
+            System.out.println("salt: " + salt);
+            System.out.println("\n");
+
+            //key is secured password
+            String key = passwordUtils.hashPassword(password, salt).get();
+            System.out.println("key: " + key);
+            System.out.println("\n");
+
+            //Now we can save the secured password/Key into the db
+
             Class.forName("com.mysql.jdbc.Driver");
             // Setup the connection with the test DataBase - EVERYONE HAS ACCESS, PLEASE BE CAREFUL!!
             // Obviously, if you were distributing this file, you would not include the username and password. There are other ways...
@@ -51,7 +63,7 @@ public class Login {
             PreparedStatement pstmt = connect.prepareStatement(query);
             pstmt.setString(1, customerID);
             pstmt.setString(2, email);
-            pstmt.setString(3, password);
+            pstmt.setString(3, key);
 
             int resultsint = pstmt.executeUpdate();
 
@@ -63,10 +75,4 @@ public class Login {
 
     }
 
-   
-    
-    
-    
 }
-
-

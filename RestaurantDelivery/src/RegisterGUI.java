@@ -210,6 +210,9 @@ public class RegisterGUI extends javax.swing.JFrame {
         
         //WILl also need to add to customer address table
         try {
+           //calling create customer now automatically adds user's login info to login table
+           //also handles passwordmanagement utilities
+           
             loginObj.createLogin(customerID, email, password);
             customerObj.createCustomer(customerID, firstName, lastName, phoneNumber);
             addressObj.createCustomerAddress(customerID, address, city, zipcode);
