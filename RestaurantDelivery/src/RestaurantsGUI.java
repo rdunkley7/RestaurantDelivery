@@ -15,13 +15,24 @@ import java.sql.SQLException;
  */
 public class RestaurantsGUI extends javax.swing.JFrame {
 
+    
+    Orders order = new Orders();
+     String customerID;
+
     /**
-     * Creates new form RestaurantsGUI
+     * Creates new form UserGUI3
      */
-    public RestaurantsGUI() {
+    public RestaurantsGUI(String customerID) {
+        this.customerID = customerID;
         initComponents();
     }
 
+    private RestaurantsGUI() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+ 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,7 +49,7 @@ public class RestaurantsGUI extends javax.swing.JFrame {
         resultTextArea = new javax.swing.JTextArea();
         orderField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        addtoOrderButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         orderTextBox = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
@@ -64,7 +75,12 @@ public class RestaurantsGUI extends javax.swing.JFrame {
 
         jLabel1.setText("Enter Menu Number:");
 
-        jButton1.setText("Add to Order");
+        addtoOrderButton.setText("Add to Order");
+        addtoOrderButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addtoOrderButtonActionPerformed(evt);
+            }
+        });
 
         orderTextBox.setColumns(20);
         orderTextBox.setRows(5);
@@ -73,6 +89,11 @@ public class RestaurantsGUI extends javax.swing.JFrame {
         jLabel2.setText("Your Current Order:");
 
         checkOutButton.setText("Finish Order");
+        checkOutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkOutButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -89,9 +110,10 @@ public class RestaurantsGUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(checkOutButton))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(checkOutButton)
+                                .addComponent(addtoOrderButton)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(orderField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)))
@@ -117,8 +139,8 @@ public class RestaurantsGUI extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(orderField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
+                .addComponent(addtoOrderButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(checkOutButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
@@ -139,6 +161,8 @@ public class RestaurantsGUI extends javax.swing.JFrame {
         //String comboName = restaurantComboBox.getname();
         String restName = restaurantComboBox.getSelectedItem().toString();
         
+        System.out.println(customerID);
+        
         Restaurant restaurant = new Restaurant();
        
             try {
@@ -157,6 +181,26 @@ public class RestaurantsGUI extends javax.swing.JFrame {
             
         
     }//GEN-LAST:event_restaurantComboBoxActionPerformed
+
+    private void addtoOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addtoOrderButtonActionPerformed
+        // TODO add your handling code here:
+        String menuItemID = orderTextBox.getText();
+        
+        //get the menuID from textbox
+        //send to Order for insert to foodOrder table
+        //also update customer table by customerID - update the paymentID and orderID
+        
+        
+        
+    }//GEN-LAST:event_addtoOrderButtonActionPerformed
+
+    private void checkOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOutButtonActionPerformed
+        // TODO add your handling code here:
+        
+        //update foodOrder table - update orderStatus & timesubmitted
+        
+        
+    }//GEN-LAST:event_checkOutButtonActionPerformed
 
     /**
          * @param args the command line arguments
@@ -219,8 +263,8 @@ public class RestaurantsGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addtoOrderButton;
     private javax.swing.JButton checkOutButton;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

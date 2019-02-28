@@ -164,14 +164,17 @@ public class LoginGui extends javax.swing.JFrame {
             String pwd = String.copyValueOf(pass);
             if (validate_login(user, pwd)) {
                 JOptionPane.showMessageDialog(null, "Sucessful!");
+                String customerID = user;
+
+                RestaurantsGUI restaurantsGUI = new RestaurantsGUI(customerID);
+                restaurantsGUI.setVisible(true);
+                this.dispose();
+
             } else {
                 JOptionPane.showMessageDialog(null, "Incorrect username and/or password");
             }
         }
 
-        RestaurantsGUI restaurantsGUI = new RestaurantsGUI();
-        restaurantsGUI.setVisible(true);
-        this.dispose();
 
     }//GEN-LAST:event_loginBtnActionPerformed
 

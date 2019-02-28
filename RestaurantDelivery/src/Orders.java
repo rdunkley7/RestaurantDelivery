@@ -12,11 +12,11 @@ public class Orders {
     
     //handle adding an order to the customer
     
-    public void addOrderForCustomer(String orderID, String restaurantID ){
+    public void addOrderForCustomer(String menuItemID, String restaurantID ){
         
         String orderStatus;
         String timeSubmitted;
-        String menuItemID;
+        //String menuItemID;
         
         
         
