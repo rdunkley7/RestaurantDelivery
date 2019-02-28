@@ -3,6 +3,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -51,7 +53,7 @@ public class RestaurantsGUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         addtoOrderButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        orderTextBox = new javax.swing.JTextArea();
+        orderTextArea = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         checkOutButton = new javax.swing.JButton();
 
@@ -82,9 +84,9 @@ public class RestaurantsGUI extends javax.swing.JFrame {
             }
         });
 
-        orderTextBox.setColumns(20);
-        orderTextBox.setRows(5);
-        jScrollPane2.setViewportView(orderTextBox);
+        orderTextArea.setColumns(20);
+        orderTextArea.setRows(5);
+        jScrollPane2.setViewportView(orderTextArea);
 
         jLabel2.setText("Your Current Order:");
 
@@ -161,7 +163,7 @@ public class RestaurantsGUI extends javax.swing.JFrame {
         //String comboName = restaurantComboBox.getname();
         String restName = restaurantComboBox.getSelectedItem().toString();
         
-        System.out.println(customerID);
+        
         
         Restaurant restaurant = new Restaurant();
        
@@ -183,12 +185,20 @@ public class RestaurantsGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_restaurantComboBoxActionPerformed
 
     private void addtoOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addtoOrderButtonActionPerformed
-        // TODO add your handling code here:
-        String menuItemID = orderTextBox.getText();
-        
-        //get the menuID from textbox
-        //send to Order for insert to foodOrder table
-        //also update customer table by customerID - update the paymentID and orderID
+        try {
+            // TODO add your handling code here:
+            String menuItemID = orderField.getText();   
+           
+            int orderID = order.addOrderForCustomer(menuItemID);
+            System.out.println(menuItemID);
+            //send to Order for insert to foodOrder table
+            
+            ResultSet orderResult  = order.readOrdersMenu(menuItemID);
+            writeOrderResultSet(orderResult);
+            //also update customer table by customerID - update the paymentID and orderID
+        } catch (Exception ex) {
+            Logger.getLogger(RestaurantsGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         
         
@@ -252,16 +262,30 @@ public class RestaurantsGUI extends javax.swing.JFrame {
 
                     
                     resultTextArea.append(String.format("%n %-5s %-20s $%-20.2f %-5s" ,menuItemID, menuItemName, menuItemPrice, menuItemDesc));
-//                    resultTextArea.append("menuItemID: " + menuItemID);
-//                    resultTextArea.append("menuItemName: " + menuItemName);
-//                    resultTextArea.append("menuItemDesc : " + menuItemDesc);
-//                    resultTextArea.append("menuItemPrice : " + menuItemPrice);
-//                    resultTextArea.append("restID : " + restID);
-//                    resultTextArea.append("\n");
+
                 }
         
     }
 
+    public void writeOrderResultSet(ResultSet menuResult) throws SQLException {
+        // ResultSet is initially before the first data set
+     
+
+            while (menuResult.next()) {
+                   
+                   
+                    String menuItemID = menuResult.getString("menuItemID");
+                    String menuItemName = menuResult.getString("menuItemName");
+                    String menuItemDesc = menuResult.getString("menuItemDescription");
+                    Double menuItemPrice = menuResult.getDouble("menuItemPrice");
+                    String restID = menuResult.getString("restID");
+
+                    
+                    orderTextArea.append(String.format("%n %-5s %-20s $%-20.2f %-5s" ,menuItemID, menuItemName, menuItemPrice, menuItemDesc));
+
+                }
+        
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addtoOrderButton;
     private javax.swing.JButton checkOutButton;
@@ -272,7 +296,7 @@ public class RestaurantsGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JTextField orderField;
-    private javax.swing.JTextArea orderTextBox;
+    private javax.swing.JTextArea orderTextArea;
     private javax.swing.JComboBox<String> restaurantComboBox;
     private javax.swing.JTextArea resultTextArea;
     // End of variables declaration//GEN-END:variables

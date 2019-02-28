@@ -17,20 +17,12 @@ import javax.swing.JTextArea;
  *
  * @author rdunkley13
  */
-public class Restaurant extends JFrame{
+public class Restaurant {
 
     private Connection connect = null;
     private Statement statement = null;
     private ResultSet resultSet = null;
-    private JTextArea resultTextArea;
-    
-     public void appendDisplay(String text) {
-        resultTextArea.append(text);
-    }
-
-    public String getDisplayText() {
-        return resultTextArea.getText();
-    }
+  
     
     public ResultSet readMenu(String restName) throws Exception {
         try {
