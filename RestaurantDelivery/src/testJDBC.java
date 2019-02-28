@@ -17,38 +17,22 @@ public class testJDBC {
 //        
 
 
-        Login login = new Login();
-        String salt = login.generateSalt(512).get();
+        PasswordUtils passwordUtils = new PasswordUtils();
+        String salt = passwordUtils.generateSalt(512).get();
         System.out.println("salt: " + salt);
         System.out.println("\n");
                 
         String password = "1234";
    
         //key is secured password
-        String key = login.hashPassword(password, salt).get();
+        String key = passwordUtils.hashPassword(password, salt).get();
         System.out.println("key: " +key);
         System.out.println("\n");
         
-        System.out.println(login.verifyPassword("1234", key, salt));
-        System.out.println(login.verifyPassword("4321", key, salt));  
+        System.out.println(passwordUtils.verifyPassword("1234", key, salt));
+        System.out.println(passwordUtils.verifyPassword("4321", key, salt));  
        
-        ////////////
-        
-        String salt2 = login.generateSalt(512).get();
-        System.out.println("salt2: " + salt2);
-        System.out.println("\n");
-                
-        String password2 = "1234";
-   
-        //key is secured password
-        String key2 = login.hashPassword(password, salt).get();
-        System.out.println("key2: " +key2);
-        System.out.println("\n");
-        
-        System.out.println(login.verifyPassword("1234", key2, salt2));
-        
-        
-        
+     
         
     }
 

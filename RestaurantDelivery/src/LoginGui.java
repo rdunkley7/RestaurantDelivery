@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 public class LoginGui extends javax.swing.JFrame {
  
     
-    Login login = new Login();
+    PasswordUtils passwordUtils = new PasswordUtils();
     /**
      * Creates new form LoginGui
      */
@@ -195,17 +195,17 @@ public class LoginGui extends javax.swing.JFrame {
             pst.setString(2, password);
             
             
-        String salt = login.generateSalt(512).get();
+        String salt = passwordUtils.generateSalt(512).get();
         System.out.println("salt: " + salt);
         System.out.println("\n");
    
         //key is secured password
-        String key = login.hashPassword(password, salt).get();
+        String key = passwordUtils.hashPassword(password, salt).get();
         System.out.println("key: " +key);
         System.out.println("\n");
         
-        System.out.println(login.verifyPassword("1234", key, salt));
-        System.out.println(login.verifyPassword("4321", key, salt));
+        System.out.println(passwordUtils.verifyPassword("1234", key, salt));
+        System.out.println(passwordUtils.verifyPassword("4321", key, salt));
             
             ResultSet resultSet = pst.executeQuery();
             if(resultSet.next())
