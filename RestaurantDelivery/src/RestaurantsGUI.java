@@ -148,26 +148,27 @@ public class RestaurantsGUI extends javax.swing.JFrame {
 
     public void writeRestaurantResultSet(ResultSet menuResult) throws SQLException {
         // ResultSet is initially before the first data set
-        while (menuResult.next()) {
-            
+     
 
             while (menuResult.next()) {
                    
-                    resultTextArea.append("menuItemID");
+                   
                     String menuItemID = menuResult.getString("menuItemID");
                     String menuItemName = menuResult.getString("menuItemName");
                     String menuItemDesc = menuResult.getString("menuItemDescription");
-                    String menuItemPrice = menuResult.getString("menuItemPrice");
+                    Double menuItemPrice = menuResult.getDouble("menuItemPrice");
                     String restID = menuResult.getString("restID");
 
-                    resultTextArea.append("menuItemID: " + menuItemID);
-                    resultTextArea.append("menuItemName: " + menuItemName);
-                    resultTextArea.append("menuItemDesc : " + menuItemDesc);
-                    resultTextArea.append("menuItemPrice : " + menuItemPrice);
-                    resultTextArea.append("restID : " + restID);
-                    resultTextArea.append("\n");
+                    
+                    resultTextArea.append(String.format("%n %-20s $%-20.2f %-5s" ,menuItemName, menuItemPrice, menuItemDesc));
+//                    resultTextArea.append("menuItemID: " + menuItemID);
+//                    resultTextArea.append("menuItemName: " + menuItemName);
+//                    resultTextArea.append("menuItemDesc : " + menuItemDesc);
+//                    resultTextArea.append("menuItemPrice : " + menuItemPrice);
+//                    resultTextArea.append("restID : " + restID);
+//                    resultTextArea.append("\n");
                 }
-        }
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
