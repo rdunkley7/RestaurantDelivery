@@ -41,7 +41,7 @@ public class Login {
 
             //HASH THE PASSWORD.. upon creating the user login 
             
-            String salt = passwordUtils.generateSalt(512).get();
+            String salt = passwordUtils.generateSalt(100).get();
             System.out.println("salt: " + salt);
             System.out.println("\n");
 
@@ -57,13 +57,14 @@ public class Login {
             // Obviously, if you were distributing this file, you would not include the username and password. There are other ways...
             connect = DriverManager.getConnection("jdbc:mysql://50.116.3.147/ai7321lr_RestaurantDelivery?user=in8738bw&password=in8738bw");
 
-            String query = "INSERT INTO login (customerID, email, password)"
-                    + "VALUES (?,?,?)";
+            String query = "INSERT INTO login (customerID, email, password, salt)"
+                    + "VALUES (?,?,?,?)";
 
             PreparedStatement pstmt = connect.prepareStatement(query);
             pstmt.setString(1, customerID);
             pstmt.setString(2, email);
             pstmt.setString(3, key);
+            pstmt.setString(4, salt);
 
             int resultsint = pstmt.executeUpdate();
 

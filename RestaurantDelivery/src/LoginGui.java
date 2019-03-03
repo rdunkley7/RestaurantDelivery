@@ -153,27 +153,28 @@ public class LoginGui extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordInputFocusGained
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        if (usernameInput.getText().length() == 0) {
-            JOptionPane.showMessageDialog(null, "You need to enter a username");
-        } else if (passwordInput.getPassword().length == 0) {
-            JOptionPane.showMessageDialog(null, "You need to enter a password");
+//        if (usernameInput.getText().length() == 0) {
+//            JOptionPane.showMessageDialog(null, "You need to enter a username");
+//        } else if (passwordInput.getPassword().length == 0) {
+//            JOptionPane.showMessageDialog(null, "You need to enter a password");
+//        } else {
+        String user = usernameInput.getText();
+        char[] pass = passwordInput.getPassword();
+        String pwd = passwordInput.getText();
+
+        // String pwd = String.copyValueOf(pass);
+        if (validate_login(user, pwd)) {
+            JOptionPane.showMessageDialog(null, "Sucessful!");
+            String customerID = user;
+
+            RestaurantsGUI restaurantsGUI = new RestaurantsGUI(customerID);
+            restaurantsGUI.setVisible(true);
+            this.dispose();
+
         } else {
-            String user = usernameInput.getText();
-            char[] pass = passwordInput.getPassword();
-
-            String pwd = String.copyValueOf(pass);
-            if (validate_login(user, pwd)) {
-                JOptionPane.showMessageDialog(null, "Sucessful!");
-                String customerID = user;
-
-                RestaurantsGUI restaurantsGUI = new RestaurantsGUI(customerID);
-                restaurantsGUI.setVisible(true);
-                this.dispose();
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Incorrect username and/or password");
-            }
+            JOptionPane.showMessageDialog(null, "Incorrect username and/or password");
         }
+        // }
 
 
     }//GEN-LAST:event_loginBtnActionPerformed
@@ -191,31 +192,48 @@ public class LoginGui extends javax.swing.JFrame {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             java.sql.Connection connect = DriverManager.getConnection("jdbc:mysql://50.116.3.147/ai7321lr_RestaurantDelivery?user=in8738bw&password=in8738bw");
-            PreparedStatement pst = connect.prepareStatement("Select * from login where customerID=? and password=?");
+            PreparedStatement pst = connect.prepareStatement("Select password, salt from login where customerID=?");
             pst.setString(1, username);
-            pst.setString(2, password);
-            ResultSet resultSet = pst.executeQuery();
+            ResultSet passwordResultSet = pst.executeQuery();
 
-            ///need to fix next^^. Above reads from db based on user entry.. but pw entered will need varification first
-            //then compare the secured/hashed pw with the one retrieved from db (rather than one typed like above)
-            //
-            String salt = passwordUtils.generateSalt(512).get();
-            System.out.println("salt: " + salt);
+            //First pull out the hashed password and salt from the database based on the username entered
+            //then using thes salt from db, apply to the pw they entered
+            //Generate a key from the pwEntry+ Salt
+            // then compare the stored hashed and result generated from ^
+            String dbPassword = null;
+            String dbSalt = null;
+            while (passwordResultSet.next()) {
+                dbPassword = passwordResultSet.getString("password");
+                dbSalt = passwordResultSet.getString("salt");
+                System.out.println("pass: " + dbPassword);
+                System.out.println("salt: " + dbSalt);
+
+            }
+            System.out.println("Password: " + dbPassword);
+            System.out.println("salt: " + dbSalt);
             System.out.println("\n");
 
-            //key is the secured password to be stored in db
-            String key = passwordUtils.hashPassword(password, salt).get();
+            //Generate a key from the pwEntry+ Salt
+            String key = passwordUtils.hashPassword(password, dbSalt).get();
             System.out.println("key: " + key);
             System.out.println("\n");
+         
+            if (dbPassword.equals(key)) {
 
-            if ((passwordUtils.verifyPassword(password, key, salt)) == true) {
-                System.out.println("Password validated");
+                System.out.println("Password is the same can login");
                 return true;
             } else {
-                System.out.println("Password incorrect");
+                System.out.println("Password wrong");
                 return false;
             }
 
+//            if ((passwordUtils.verifyPassword(password, key, salt)) == true) {
+//                System.out.println("Password validated");
+//                return true;
+//            } else {
+//                System.out.println("Password incorrect");
+//                return false;
+            //}
         } catch (Exception e) {
             e.printStackTrace();
             return false;

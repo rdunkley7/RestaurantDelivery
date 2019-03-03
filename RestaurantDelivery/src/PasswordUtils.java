@@ -23,7 +23,7 @@ public class PasswordUtils {
 
     private static final SecureRandom RAND = new SecureRandom();
     private static final int ITERATIONS = 65536;
-    private static final int KEY_LENGTH = 512;
+    private static final int KEY_LENGTH = 255;
     private static final String ALGORITHM = "PBKDF2WithHmacSHA512";
 
     //Method for us to generate the salt so that we can add it to the password later
