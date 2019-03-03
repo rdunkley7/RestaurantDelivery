@@ -189,11 +189,11 @@ public class RestaurantsGUI extends javax.swing.JFrame {
             // TODO add your handling code here:
             String menuItemID = orderField.getText();   
            
-            int orderID = order.addOrderForCustomer(menuItemID);
+            int orderID = order.addOrderForCustomer(menuItemID, customerID);
             System.out.println(menuItemID);
             //send to Order for insert to foodOrder table
             
-            ResultSet orderResult  = order.readOrdersMenu(menuItemID);
+            ResultSet orderResult  = order.readOrdersMenu(customerID);
             writeOrderResultSet(orderResult);
             //also update customer table by customerID - update the paymentID and orderID
         } catch (Exception ex) {
@@ -248,43 +248,24 @@ public class RestaurantsGUI extends javax.swing.JFrame {
     }
 
     public void writeRestaurantResultSet(ResultSet menuResult) throws SQLException {
-        // ResultSet is initially before the first data set
-     
-
             while (menuResult.next()) {
-                   
-                   
                     String menuItemID = menuResult.getString("menuItemID");
                     String menuItemName = menuResult.getString("menuItemName");
                     String menuItemDesc = menuResult.getString("menuItemDescription");
                     Double menuItemPrice = menuResult.getDouble("menuItemPrice");
-                    String restID = menuResult.getString("restID");
-
-                    
+                    String restID = menuResult.getString("restID");   
                     resultTextArea.append(String.format("%n %-5s %-20s $%-20.2f %-5s" ,menuItemID, menuItemName, menuItemPrice, menuItemDesc));
-
                 }
-        
     }
-
     public void writeOrderResultSet(ResultSet menuResult) throws SQLException {
-        // ResultSet is initially before the first data set
-     
-
             while (menuResult.next()) {
-                   
-                   
                     String menuItemID = menuResult.getString("menuItemID");
                     String menuItemName = menuResult.getString("menuItemName");
                     String menuItemDesc = menuResult.getString("menuItemDescription");
                     Double menuItemPrice = menuResult.getDouble("menuItemPrice");
                     String restID = menuResult.getString("restID");
-
-                    
                     orderTextArea.append(String.format("%n %-5s %-20s $%-20.2f %-5s" ,menuItemID, menuItemName, menuItemPrice, menuItemDesc));
-
                 }
-        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addtoOrderButton;
