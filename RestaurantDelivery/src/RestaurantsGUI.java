@@ -205,9 +205,17 @@ public class RestaurantsGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_addtoOrderButtonActionPerformed
 
     private void checkOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOutButtonActionPerformed
-        // TODO add your handling code here:
-        
-        //update foodOrder table - update orderStatus & timesubmitted
+        try {
+            // TODO add your handling code here:
+            
+            //update foodOrder table - update orderStatus & timesubmitted
+            //also handles the total purchase price for order
+            Double totalPrice = order.readCheckout(customerID);
+            orderTextArea.append(String.format("%n%nYour order total: %.2f",totalPrice));
+            
+        } catch (Exception ex) {
+            Logger.getLogger(RestaurantsGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         
     }//GEN-LAST:event_checkOutButtonActionPerformed

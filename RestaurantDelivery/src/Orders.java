@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
@@ -60,7 +61,7 @@ public class Orders {
 
     private String updateRestID(String menuItemID) throws Exception {
         String restID = null;
-        
+
         try {
 
             Class.forName("com.mysql.jdbc.Driver");
@@ -72,19 +73,17 @@ public class Orders {
             ResultSet resultSet = pstmt.executeQuery();
 
             while (resultSet.next()) {
-                 restID = resultSet.getString(1);
+                restID = resultSet.getString(1);
             }
 
-            
             return restID;
-            
-            
+
         } catch (Exception e) {
             throw e;
         } finally {
             //close();
         }
-        
+
     }
 
     public ResultSet readOrdersMenu(int orderID) throws Exception {
@@ -160,7 +159,7 @@ public class Orders {
                 totalPrice = resultSet.getDouble(1);
             }
 
-            checkoutUpdate();
+            checkoutUpdate(customerID);
             return totalPrice;
 
         } catch (Exception e) {
@@ -171,9 +170,44 @@ public class Orders {
 
     }
 
-    public void checkoutUpdate() {
+    public void checkoutUpdate(String customerID) throws Exception {
 //method should update the order table with updated information 
 /// UPDATE: orderStatus, time submitted
+
+        //Checkout default status
+        String orderStatus = "In Progress";
+        long timeSubmitted = System.currentTimeMillis();
+        
+        //method 1
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        
+
+        try {
+
+            
+            Class.forName("com.mysql.jdbc.Driver");
+            java.sql.Connection connect = DriverManager.getConnection("jdbc:mysql://50.116.3.147/ai7321lr_RestaurantDelivery?user=in8738bw&password=in8738bw");
+
+            String query = "update customers "
+                         + "set orderStatus = ?, timeSubmitted = ? "
+                         + "where customerID = ?";
+                    
+//                    "UPDATE Customers\n"
+//                    + "SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'\n"
+//                    + "WHERE CustomerID = 1;";
+
+            PreparedStatement pstmt = connect.prepareStatement(query);
+            
+            pstmt.setString(1, orderStatus);
+            pstmt.setLong(2, timeSubmitted);
+            pstmt.setString(3, customerID);
+            int resultsint = pstmt.executeUpdate();
+
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            //close();
+        }
 
     }
 

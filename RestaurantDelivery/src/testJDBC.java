@@ -15,7 +15,8 @@ public class testJDBC {
 //        Customer cust = new Customer ();
 //        cust.readCustomerDB();
 //        
-
+        Long time = System.currentTimeMillis();
+        System.out.println(time);
 
         PasswordUtils passwordUtils = new PasswordUtils();
         String salt = passwordUtils.generateSalt(255).get();
