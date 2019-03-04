@@ -1,13 +1,9 @@
 
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
-import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
-import java.util.Date;
-
 /**
  *
  * @author rdunkley13
  */
+
 public class testJDBC {
 
     // This is just a helper program to test your database connection
@@ -18,27 +14,26 @@ public class testJDBC {
 //        //test to check customer loginID
 //        Customer cust = new Customer ();
 //        cust.readCustomerDB();
+//        
 
-// 2nd way: current time and date using SimpleDateFormat
-        Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-        System.out.println("Today's date is: " + dateFormat.format(date));
 
         PasswordUtils passwordUtils = new PasswordUtils();
         String salt = passwordUtils.generateSalt(255).get();
         System.out.println("salt: " + salt);
         System.out.println("\n");
-
+                
         String password = "1234";
-
+   
         //key is secured password
         String key = passwordUtils.hashPassword(password, salt).get();
-        System.out.println("key: " + key);
+        System.out.println("key: " +key);
         System.out.println("\n");
-
+        
         System.out.println(passwordUtils.verifyPassword("1234", key, salt));
-        System.out.println(passwordUtils.verifyPassword("4321", key, salt));
-
+        System.out.println(passwordUtils.verifyPassword("4321", key, salt));  
+       
+     
+        
     }
 
 }

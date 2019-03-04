@@ -41,19 +41,10 @@
                           <Component id="restaurantComboBox" min="-2" pref="208" max="-2" attributes="0"/>
                           <Component id="checkOutButton" alignment="1" min="-2" pref="237" max="-2" attributes="0"/>
                       </Group>
-<<<<<<< HEAD
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       <Component id="addtoOrderButton" min="-2" pref="134" max="-2" attributes="0"/>
-=======
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="orderField" min="-2" pref="97" max="-2" attributes="0"/>
-                          <Component id="exitButton" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="42" max="32767" attributes="0"/>
->>>>>>> 5a69c36426f3245de1cec836cd9e5f057389611c
                   </Group>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -112,25 +103,6 @@
                       <Component id="checkOutButton" min="-2" pref="39" max="-2" attributes="0"/>
                   </Group>
               </Group>
-<<<<<<< HEAD
-=======
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="addtoOrderButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="checkOutButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="exitButton" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-              <Component id="jScrollPane3" min="-2" pref="135" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane2" pref="100" max="32767" attributes="0"/>
->>>>>>> 5a69c36426f3245de1cec836cd9e5f057389611c
           </Group>
       </Group>
     </DimensionLayout>
@@ -229,7 +201,6 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkOutButtonActionPerformed"/>
       </Events>
     </Component>
-<<<<<<< HEAD
     <Container class="javax.swing.JScrollPane" name="jScrollPane4">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -259,15 +230,5 @@
         </Component>
       </SubComponents>
     </Container>
-=======
-    <Component class="javax.swing.JButton" name="exitButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Exit"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exitButtonActionPerformed"/>
-      </Events>
-    </Component>
->>>>>>> 5a69c36426f3245de1cec836cd9e5f057389611c
   </SubComponents>
 </Form>
