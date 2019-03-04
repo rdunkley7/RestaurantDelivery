@@ -17,9 +17,8 @@ import java.util.logging.Logger;
  */
 public class RestaurantsGUI extends javax.swing.JFrame {
 
-    
     Orders order = new Orders();
-     String customerID;
+    String customerID;
 
     /**
      * Creates new form UserGUI3
@@ -33,8 +32,6 @@ public class RestaurantsGUI extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
- 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -162,59 +159,67 @@ public class RestaurantsGUI extends javax.swing.JFrame {
         int x = restaurantComboBox.getSelectedIndex();
         //String comboName = restaurantComboBox.getname();
         String restName = restaurantComboBox.getSelectedItem().toString();
-        
-        
-        
-        Restaurant restaurant = new Restaurant();
-       
-            try {
-                //first selection can be mexican for now
-                
 
-                //call restaruarnt from db to read the menu then print results
-                ResultSet menuResult = restaurant.readMenu(restName);
-                resultTextArea.append(restName + " menu: ");
-                writeRestaurantResultSet(menuResult);
-  
-                }catch(Exception e){
-                e.printStackTrace();
-            
-                }
-            
-        
+        Restaurant restaurant = new Restaurant();
+
+        try {
+            //first selection can be mexican for now
+
+            //call restaruarnt from db to read the menu then print results
+            ResultSet menuResult = restaurant.readMenu(restName);
+            resultTextArea.append(restName + " menu: ");
+            writeRestaurantResultSet(menuResult);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+
     }//GEN-LAST:event_restaurantComboBoxActionPerformed
 
     private void addtoOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addtoOrderButtonActionPerformed
         try {
             // TODO add your handling code here:
-            String menuItemID = orderField.getText();   
-           
+            String menuItemID = orderField.getText();
+
             int orderID = order.addOrderForCustomer(menuItemID, customerID);
             System.out.println(menuItemID);
             //send to Order for insert to foodOrder table
-            
-            ResultSet orderResult  = order.readOrdersMenu(orderID);
+
+            ResultSet orderResult = order.readOrdersMenu(orderID);
             writeOrderResultSet(orderResult);
             //also update customer table by customerID - update the paymentID and orderID
         } catch (Exception ex) {
             Logger.getLogger(RestaurantsGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
+
+
     }//GEN-LAST:event_addtoOrderButtonActionPerformed
 
     private void checkOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkOutButtonActionPerformed
-        // TODO add your handling code here:
-        
-        //update foodOrder table - update orderStatus & timesubmitted
-        
-        
+        try {
+            // TODO add your handling code here:
+
+//update foodOrder table - update orderStatus & timesubmitted
+            //also handles the total purchase price for order
+            Double totalPrice = order.readCheckout(customerID);
+
+            String deliveryTime = order.checkoutUpdate(customerID);
+
+            orderTextArea.append(String.format("%n%nYour order total: $%.2f", totalPrice));
+            orderTextArea.append(String.format("%nThank you for your purchase."));
+            orderTextArea.append(String.format("%nYour order is being processed and has an estimated delivery time of " + deliveryTime));
+
+        } catch (Exception ex) {
+            Logger.getLogger(RestaurantsGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_checkOutButtonActionPerformed
 
     /**
-         * @param args the command line arguments
-         */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -248,24 +253,25 @@ public class RestaurantsGUI extends javax.swing.JFrame {
     }
 
     public void writeRestaurantResultSet(ResultSet menuResult) throws SQLException {
-            while (menuResult.next()) {
-                    String menuItemID = menuResult.getString("menuItemID");
-                    String menuItemName = menuResult.getString("menuItemName");
-                    String menuItemDesc = menuResult.getString("menuItemDescription");
-                    Double menuItemPrice = menuResult.getDouble("menuItemPrice");
-                    String restID = menuResult.getString("restID");   
-                    resultTextArea.append(String.format("%n %-5s %-20s $%-20.2f %-5s" ,menuItemID, menuItemName, menuItemPrice, menuItemDesc));
-                }
+        while (menuResult.next()) {
+            String menuItemID = menuResult.getString("menuItemID");
+            String menuItemName = menuResult.getString("menuItemName");
+            String menuItemDesc = menuResult.getString("menuItemDescription");
+            Double menuItemPrice = menuResult.getDouble("menuItemPrice");
+            String restID = menuResult.getString("restID");
+            resultTextArea.append(String.format("%n %-5s %-20s $%-20.2f %-5s", menuItemID, menuItemName, menuItemPrice, menuItemDesc));
+        }
     }
+
     public void writeOrderResultSet(ResultSet menuResult) throws SQLException {
-            while (menuResult.next()) {
-                    String menuItemID = menuResult.getString("menuItemID");
-                    String menuItemName = menuResult.getString("menuItemName");
-                    String menuItemDesc = menuResult.getString("menuItemDescription");
-                    Double menuItemPrice = menuResult.getDouble("menuItemPrice");
-                    String restID = menuResult.getString("restID");
-                    orderTextArea.append(String.format("%n %-5s %-20s $%-20.2f %-5s" ,menuItemID, menuItemName, menuItemPrice, menuItemDesc));
-                }
+        while (menuResult.next()) {
+            String menuItemID = menuResult.getString("menuItemID");
+            String menuItemName = menuResult.getString("menuItemName");
+            String menuItemDesc = menuResult.getString("menuItemDescription");
+            Double menuItemPrice = menuResult.getDouble("menuItemPrice");
+            String restID = menuResult.getString("restID");
+            orderTextArea.append(String.format("%n %-5s %-20s $%-20.2f %-5s", menuItemID, menuItemName, menuItemPrice, menuItemDesc));
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addtoOrderButton;

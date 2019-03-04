@@ -14,6 +14,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
@@ -45,8 +47,6 @@ public class Orders {
             pstmt.setString(3, "");
             pstmt.setString(4, "");
             pstmt.setString(5, menuItemID);
-            int resultsint = pstmt.executeUpdate();
-
             pstmt.setString(6, customerID);
             int resultsint = pstmt.executeUpdate();
 
@@ -164,7 +164,6 @@ public class Orders {
                 totalPrice = resultSet.getDouble(1);
             }
 
-            checkoutUpdate();
             return totalPrice;
 
         } catch (Exception e) {
@@ -179,6 +178,52 @@ public class Orders {
 //method should update the order table with updated information 
 /// UPDATE: orderStatus, time submitted
 
+    }
+    
+    public String checkoutUpdate(String customerID) throws Exception {
+//method should update the order table with updated information 
+/// UPDATE: orderStatus, time submitted
+
+        //Checkout default status
+        String orderStatus = "In Progress";
+        
+        
+
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        System.out.println("Today's date is: " + dateFormat.format(date));
+        String timeSubmitted = dateFormat.format(date);
+
+        //SimpleDateFormat sdfStopTime = new SimpleDateFormat("hh:mm:ss a", Locale.ENGLISH);
+
+        String estimatedDeliveryTime = dateFormat.format(new Date(System.currentTimeMillis() + 3600000));
+
+        try {
+
+            Class.forName("com.mysql.jdbc.Driver");
+            java.sql.Connection connect = DriverManager.getConnection("jdbc:mysql://50.116.3.147/ai7321lr_RestaurantDelivery?user=in8738bw&password=in8738bw");
+
+            String query = "update foodOrder "
+                    + "set orderStatus = ?, timeSubmitted = ?, estimatedDeliverTime = ?"
+                    + "where customerID = ?";
+
+            PreparedStatement pstmt = connect.prepareStatement(query);
+            
+
+            pstmt.setString(1, orderStatus);
+            pstmt.setString(2, timeSubmitted);
+            pstmt.setString(3, customerID);
+            pstmt.setString(3, estimatedDeliveryTime);
+            pstmt.setString(4, customerID);
+            int resultsint = pstmt.executeUpdate();
+
+            
+            return estimatedDeliveryTime;
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            
+        }
     }
 
     // You need to close the resultSet
