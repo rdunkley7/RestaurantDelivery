@@ -56,6 +56,7 @@ public class RestaurantsGUI extends javax.swing.JFrame {
         orderTextArea = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         checkOutButton = new javax.swing.JButton();
+        exitButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -97,6 +98,13 @@ public class RestaurantsGUI extends javax.swing.JFrame {
             }
         });
 
+        exitButton.setText("Exit");
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -117,7 +125,9 @@ public class RestaurantsGUI extends javax.swing.JFrame {
                                 .addComponent(checkOutButton)
                                 .addComponent(addtoOrderButton)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(orderField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(orderField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(exitButton))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -143,7 +153,9 @@ public class RestaurantsGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addtoOrderButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(checkOutButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(checkOutButton)
+                    .addComponent(exitButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
@@ -212,6 +224,8 @@ public class RestaurantsGUI extends javax.swing.JFrame {
             //also handles the total purchase price for order
             Double totalPrice = order.readCheckout(customerID);
             orderTextArea.append(String.format("%n%nYour order total: %.2f",totalPrice));
+            orderTextArea.append("%nThank you for your purchase your is being processed and will be delivered shortly."
+                                    + "%nYour delivery driver will call you upon arival.");
             
         } catch (Exception ex) {
             Logger.getLogger(RestaurantsGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -219,6 +233,13 @@ public class RestaurantsGUI extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_checkOutButtonActionPerformed
+
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        // TODO add your handling code here:
+        
+        System.exit(0);
+        
+    }//GEN-LAST:event_exitButtonActionPerformed
 
     /**
          * @param args the command line arguments
@@ -278,6 +299,7 @@ public class RestaurantsGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addtoOrderButton;
     private javax.swing.JButton checkOutButton;
+    private javax.swing.JButton exitButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
