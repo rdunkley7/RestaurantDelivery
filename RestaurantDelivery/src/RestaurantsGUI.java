@@ -193,7 +193,7 @@ public class RestaurantsGUI extends javax.swing.JFrame {
             System.out.println(menuItemID);
             //send to Order for insert to foodOrder table
             
-            ResultSet orderResult  = order.readOrdersMenu(customerID);
+            ResultSet orderResult  = order.readOrdersMenu(orderID);
             writeOrderResultSet(orderResult);
             //also update customer table by customerID - update the paymentID and orderID
         } catch (Exception ex) {

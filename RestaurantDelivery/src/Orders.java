@@ -63,7 +63,7 @@ public class Orders {
 
     
     
-    public ResultSet readOrdersMenu(String customerID) throws Exception {
+    public ResultSet readOrdersMenu(int orderID) throws Exception {
         try {
 
             
@@ -72,11 +72,11 @@ public class Orders {
             java.sql.Connection connect = DriverManager.getConnection("jdbc:mysql://50.116.3.147/ai7321lr_RestaurantDelivery?user=in8738bw&password=in8738bw");
 
             String query = "select * from menuItem where menuItemID = "
-                                + "(select menuItemID from foodOrder where customerID =? )";
+                                + "(select menuItemID from foodOrder where orderID =? )";
                  
             PreparedStatement pstmt = connect.prepareStatement(query);
            
-            pstmt.setString(1, customerID);
+            pstmt.setInt(1, orderID);
             ResultSet resultSet = pstmt.executeQuery();
 
             
