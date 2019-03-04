@@ -45,7 +45,7 @@ public class Orders {
             pstmt.setString(3, "");
             pstmt.setString(4, "");
             pstmt.setString(5, menuItemID);
-            int resultsint = pstmt.executeUpdate();
+          //  int resultsint = pstmt.executeUpdate();
 
             pstmt.setString(6, customerID);
             int resultsint = pstmt.executeUpdate();
@@ -98,6 +98,8 @@ public class Orders {
             Class.forName("com.mysql.jdbc.Driver");
             java.sql.Connection connect = DriverManager.getConnection("jdbc:mysql://50.116.3.147/ai7321lr_RestaurantDelivery?user=in8738bw&password=in8738bw");
 
+            
+            //fix load menu - if you load mexican menu, then sushi, mexican is still visible.
             String query = "select * from menuItem where menuItemID = "
                     + "(select menuItemID from foodOrder where orderID =? )";
 
