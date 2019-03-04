@@ -148,8 +148,9 @@
       <SubComponents>
         <Component class="javax.swing.JTextPane" name="jTextPane1">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ee" green="ee" id="window" palette="3" red="ee" type="palette"/>
+              <Color blue="88" green="f6" red="ff" type="rgb"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>

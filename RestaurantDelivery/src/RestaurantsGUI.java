@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.awt.Color;
+import java.awt.Container;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -26,6 +28,9 @@ public class RestaurantsGUI extends javax.swing.JFrame {
     public RestaurantsGUI(String customerID) {
         this.customerID = customerID;
         initComponents();
+        
+        Container c = RestaurantsGUI.this.getContentPane();
+        c.setBackground(Color.getHSBColor(302, 102, 85));
     }
 
     private RestaurantsGUI() {
@@ -53,9 +58,12 @@ public class RestaurantsGUI extends javax.swing.JFrame {
         orderTextArea = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         checkOutButton = new javax.swing.JButton();
+        exitButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTextPane1.setEditable(false);
+        jTextPane1.setBackground(new java.awt.Color(204, 204, 255));
         jTextPane1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jTextPane1.setText("Select from the available restaurants below to start:");
         jTextPane1.setToolTipText("");
@@ -68,6 +76,7 @@ public class RestaurantsGUI extends javax.swing.JFrame {
             }
         });
 
+        resultTextArea.setEditable(false);
         resultTextArea.setColumns(20);
         resultTextArea.setRows(5);
         jScrollPane3.setViewportView(resultTextArea);
@@ -81,6 +90,7 @@ public class RestaurantsGUI extends javax.swing.JFrame {
             }
         });
 
+        orderTextArea.setEditable(false);
         orderTextArea.setColumns(20);
         orderTextArea.setRows(5);
         jScrollPane2.setViewportView(orderTextArea);
@@ -91,6 +101,13 @@ public class RestaurantsGUI extends javax.swing.JFrame {
         checkOutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 checkOutButtonActionPerformed(evt);
+            }
+        });
+
+        exitButton.setText("Exit");
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
             }
         });
 
@@ -109,12 +126,15 @@ public class RestaurantsGUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(checkOutButton)
-                                .addComponent(addtoOrderButton)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(orderField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(exitButton)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(checkOutButton)
+                                        .addComponent(addtoOrderButton)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(orderField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -141,7 +161,8 @@ public class RestaurantsGUI extends javax.swing.JFrame {
                 .addComponent(addtoOrderButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(checkOutButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(exitButton))
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -164,11 +185,24 @@ public class RestaurantsGUI extends javax.swing.JFrame {
 
         try {
             //first selection can be mexican for now
+            
+            
+            if(restName.equals("Mexican")) {
+                    resultTextArea.setText("");
+                    ResultSet mexicanMenu = restaurant.readMenu(restName);
+                    resultTextArea.append(restName+ " menu: ");
+                    writeRestaurantResultSet(mexicanMenu);
+                }
+                else if (restName.equals("SushiSushi")){
+                    resultTextArea.setText("");
+                    ResultSet sushiMenu = restaurant.readMenu(restName);
+                    resultTextArea.append(restName+ " menu: ");
+                    writeRestaurantResultSet(sushiMenu);
+                }else {
+                    resultTextArea.setText("");
+                }
 
             //call restaruarnt from db to read the menu then print results
-            ResultSet menuResult = restaurant.readMenu(restName);
-            resultTextArea.append(restName + " menu: ");
-            writeRestaurantResultSet(menuResult);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -216,6 +250,12 @@ public class RestaurantsGUI extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_checkOutButtonActionPerformed
+
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        // TODO add your handling code here:
+        //close the GUI
+        System.exit(0);
+    }//GEN-LAST:event_exitButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -276,6 +316,7 @@ public class RestaurantsGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addtoOrderButton;
     private javax.swing.JButton checkOutButton;
+    private javax.swing.JButton exitButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
