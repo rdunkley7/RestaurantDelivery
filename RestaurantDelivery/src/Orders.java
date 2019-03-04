@@ -17,6 +17,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
@@ -161,7 +162,7 @@ public class Orders {
                 totalPrice = resultSet.getDouble(1);
             }
 
-            checkoutUpdate(customerID);
+            
             return totalPrice;
 
         } catch (Exception e) {
@@ -172,18 +173,21 @@ public class Orders {
 
     }
 
-    public void checkoutUpdate(String customerID) throws Exception {
+    public String checkoutUpdate(String customerID) throws Exception {
 //method should update the order table with updated information 
 /// UPDATE: orderStatus, time submitted
 
         //Checkout default status
         String orderStatus = "In Progress";
-        
-        
+
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         System.out.println("Today's date is: " + dateFormat.format(date));
         String timeSubmitted = dateFormat.format(date);
+
+        //SimpleDateFormat sdfStopTime = new SimpleDateFormat("hh:mm:ss a", Locale.ENGLISH);
+
+        String estimatedDeliveryTime = dateFormat.format(new Date(System.currentTimeMillis() + 3600000));
 
         try {
 
@@ -191,16 +195,19 @@ public class Orders {
             java.sql.Connection connect = DriverManager.getConnection("jdbc:mysql://50.116.3.147/ai7321lr_RestaurantDelivery?user=in8738bw&password=in8738bw");
 
             String query = "update foodOrder "
-                         + "set orderStatus = ?, timeSubmitted = ? "
-                         + "where customerID = ?";
+                    + "set orderStatus = ?, timeSubmitted = ?, estimatedDeliverTime = ?"
+                    + "where customerID = ?";
 
             PreparedStatement pstmt = connect.prepareStatement(query);
-            
+
             pstmt.setString(1, orderStatus);
             pstmt.setString(2, timeSubmitted);
-            pstmt.setString(3, customerID);
+            pstmt.setString(3, estimatedDeliveryTime);
+            pstmt.setString(4, customerID);
             int resultsint = pstmt.executeUpdate();
 
+            
+            return estimatedDeliveryTime;
         } catch (Exception e) {
             throw e;
         } finally {
