@@ -1,12 +1,10 @@
 
 import com.mysql.jdbc.Connection;
-import java.awt.Color;
 
 import java.sql.PreparedStatement;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
-import java.awt.Container;
 
 public class LoginGui extends javax.swing.JFrame {
 
@@ -17,13 +15,6 @@ public class LoginGui extends javax.swing.JFrame {
      */
     public LoginGui() {
         initComponents();
-        
-        Container c = LoginGui.this.getContentPane();
-        c.setBackground(Color.getHSBColor(303,43,100));
-        Container l = LoginGui.this.loginBtn;
-        l.setBackground(Color.PINK);
-        Container s = LoginGui.this.signUpBtn;
-        s.setBackground(Color.PINK);
 
     }
 
@@ -81,8 +72,7 @@ public class LoginGui extends javax.swing.JFrame {
 
         jScrollPane2.setBorder(null);
 
-        jTextPane1.setEditable(false);
-        jTextPane1.setBackground(new java.awt.Color(255, 246, 136));
+        jTextPane1.setBackground(javax.swing.UIManager.getDefaults().getColor("window"));
         jTextPane1.setBorder(null);
         jTextPane1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jTextPane1.setText("New to us? Click the button below to sign up and start ordering!");
