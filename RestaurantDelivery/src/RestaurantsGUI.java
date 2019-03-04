@@ -223,9 +223,9 @@ public class RestaurantsGUI extends javax.swing.JFrame {
             //update foodOrder table - update orderStatus & timesubmitted
             //also handles the total purchase price for order
             Double totalPrice = order.readCheckout(customerID);
-            orderTextArea.append(String.format("%n%nYour order total: %.2f",totalPrice));
-            orderTextArea.append("%nThank you for your purchase your is being processed and will be delivered shortly."
-                                    + "%nYour delivery driver will call you upon arival.");
+            orderTextArea.append(String.format("%n%nYour order total: $%.2f",totalPrice));
+            orderTextArea.append(String.format("%nThank you for your purchase. Your order is being processed and will be delivered shortly."
+                                    + "%nYour delivery driver will call upon arival."));
             
         } catch (Exception ex) {
             Logger.getLogger(RestaurantsGUI.class.getName()).log(Level.SEVERE, null, ex);
