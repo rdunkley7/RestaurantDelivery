@@ -18,7 +18,7 @@ public class testJDBC {
 
 
         PasswordUtils passwordUtils = new PasswordUtils();
-        String salt = passwordUtils.generateSalt(512).get();
+        String salt = passwordUtils.generateSalt(255).get();
         System.out.println("salt: " + salt);
         System.out.println("\n");
                 

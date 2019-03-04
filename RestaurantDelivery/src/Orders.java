@@ -25,7 +25,7 @@ public class Orders {
     private Statement statement = null;
     private ResultSet resultSet = null;
   
-    public int addOrderForCustomer(String menuItemID) throws Exception{
+    public int addOrderForCustomer(String menuItemID, String customerID) throws Exception{
         
         String orderStatus;
         String timeSubmitted;
@@ -37,8 +37,8 @@ public class Orders {
             java.sql.Connection connect = DriverManager.getConnection("jdbc:mysql://50.116.3.147/ai7321lr_RestaurantDelivery?user=in8738bw&password=in8738bw");
 
           
-            String query = "INSERT INTO foodOrder (orderID, restaurantID, orderStatus, timeSubmitted, menuItemID)"
-                    + "VALUES (?,?,?,?,?)";
+            String query = "INSERT INTO foodOrder (orderID, restaurantID, orderStatus, timeSubmitted, menuItemID, customerID)"
+                    + "VALUES (?,?,?,?,?,?)";
 
             PreparedStatement pstmt = connect.prepareStatement(query);
             pstmt.setInt(1, orderID);
@@ -47,6 +47,10 @@ public class Orders {
             pstmt.setString(4, "");
             pstmt.setString(5, menuItemID);
             int resultsint = pstmt.executeUpdate();
+
+            pstmt.setString(6, customerID);
+           int resultsint = pstmt.executeUpdate();
+
 
             
             return orderID;
@@ -63,7 +67,7 @@ public class Orders {
 
     
     
-    public ResultSet readOrdersMenu(String menuItemID) throws Exception {
+    public ResultSet readOrdersMenu(int orderID) throws Exception {
         try {
 
             
@@ -71,11 +75,12 @@ public class Orders {
             Class.forName("com.mysql.jdbc.Driver");
             java.sql.Connection connect = DriverManager.getConnection("jdbc:mysql://50.116.3.147/ai7321lr_RestaurantDelivery?user=in8738bw&password=in8738bw");
 
-            String query = "select * from menuItem where menuItemID = ?";
+            String query = "select * from menuItem where menuItemID = "
+                                + "(select menuItemID from foodOrder where orderID =? )";
                  
             PreparedStatement pstmt = connect.prepareStatement(query);
            
-            pstmt.setString(1, menuItemID);
+            pstmt.setInt(1, orderID);
             ResultSet resultSet = pstmt.executeQuery();
 
             
