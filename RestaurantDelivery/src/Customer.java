@@ -115,37 +115,40 @@ public class Customer extends LoginGui{
     }
 
     //create user if not in table
-    public void createCustomer(String customerID, String firstName, String lastName, String phoneNumber) throws SQLException {
+    public int createCustomer(String customerID, String firstName, String lastName, String phoneNumber) throws SQLException {
 
+        int addressID = (int) (Math.random() * 100);
+        
         try {
             //All other fields null until changed later..?
-            String orderID; // for orderID & table
-            String paymentID = null; //= Payment status - all start as, will be changed later..??
-            String customerAddressID = null; // null for now until they update address info
-
+          
+            
+            
             Class.forName("com.mysql.jdbc.Driver");
             // Setup the connection with the test DataBase - EVERYONE HAS ACCESS, PLEASE BE CAREFUL!!
             // Obviously, if you were distributing this file, you would not include the username and password. There are other ways...
             connect = DriverManager.getConnection("jdbc:mysql://50.116.3.147/ai7321lr_RestaurantDelivery?user=in8738bw&password=in8738bw");
 
-            String query = "INSERT INTO customer (customerID, firstName, lastname, orderID, paymentID , customerAddressID, phoneNumber)"
-                    + "VALUES (?,?,?,?,?,?,?)";
+            String query = "INSERT INTO customer (customerID, firstName, lastname, phoneNumber, addressID)"
+                    + "VALUES (?,?,?,?,?)";
            
             PreparedStatement pstmt = connect.prepareStatement(query);
             pstmt.setString(1, customerID);
             pstmt.setString(2, firstName);
             pstmt.setString(3, lastName);
-            pstmt.setString(4, "");             //Add values to these when order is updated 
-            pstmt.setString(5, "");
-            pstmt.setString(6, "");
-            pstmt.setString(7, phoneNumber);
+            pstmt.setString(4, phoneNumber);
+            pstmt.setInt(5, addressID);
             int resultsint = pstmt.executeUpdate();
 
             System.out.println("Query was executed...");
             System.out.println(resultsint);
+            return addressID;
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            
         }
+        return addressID;
 
     }
 

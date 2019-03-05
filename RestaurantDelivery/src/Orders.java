@@ -28,8 +28,7 @@ public class Orders {
 
     public int addOrderForCustomer(String menuItemID, String customerID) throws Exception {
 
-        String orderStatus;
-        String timeSubmitted;
+      
         int orderID = (int) (Math.random() * 100);
         ///"999"; // random number
         try {
@@ -38,8 +37,8 @@ public class Orders {
             Class.forName("com.mysql.jdbc.Driver");
             java.sql.Connection connect = DriverManager.getConnection("jdbc:mysql://50.116.3.147/ai7321lr_RestaurantDelivery?user=in8738bw&password=in8738bw");
 
-            String query = "INSERT INTO foodOrder (orderID, restaurantID, orderStatus, timeSubmitted, menuItemID, customerID)"
-                    + "VALUES (?,?,?,?,?,?)";
+            String query = "INSERT INTO foodOrder (orderID, restaurantID, orderStatus, timeSubmitted, menuItemID, customerID, estimatedDeliverTime)"
+                    + "VALUES (?,?,?,?,?,?,?)";
 
             PreparedStatement pstmt = connect.prepareStatement(query);
             pstmt.setInt(1, orderID);
@@ -48,6 +47,7 @@ public class Orders {
             pstmt.setString(4, "");
             pstmt.setString(5, menuItemID);
             pstmt.setString(6, customerID);
+            pstmt.setString(7, "");
             int resultsint = pstmt.executeUpdate();
 
 

@@ -28,25 +28,25 @@ public class Address {
     Scanner console = new Scanner(System.in);
 
     //create user if not in table
-    public void createCustomerAddress(String customerID, String address, String city, int zipcode) throws SQLException {
+    public void createCustomerAddress(int addressID, String address, String city, int zipcode) throws SQLException {
 
         try {
             
-           String customerAddressID = customerID + "999";
+           
            
             Class.forName("com.mysql.jdbc.Driver");
             // Setup the connection with the test DataBase - EVERYONE HAS ACCESS, PLEASE BE CAREFUL!!
             // Obviously, if you were distributing this file, you would not include the username and password. There are other ways...
             connect = DriverManager.getConnection("jdbc:mysql://50.116.3.147/ai7321lr_RestaurantDelivery?user=in8738bw&password=in8738bw");
 
-            String query = "INSERT INTO customerAddress (customerID, address, city, zipcode)"
+            String query = "INSERT INTO customerAddress (address, city, zipcode, addressID)"
                     + "VALUES (?,?,?,?)";
 
             PreparedStatement pstmt = connect.prepareStatement(query);
-            pstmt.setString(1, customerID);
-            pstmt.setString(2, address);
-            pstmt.setString(3, city);
-            pstmt.setInt(4, zipcode);
+            pstmt.setString(1, address);
+            pstmt.setString(2, city);
+            pstmt.setInt(3, zipcode);
+            pstmt.setInt(4, addressID);
             int resultsint = pstmt.executeUpdate();
 
             System.out.println("Query was executed...");

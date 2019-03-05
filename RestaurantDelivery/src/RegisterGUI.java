@@ -214,8 +214,8 @@ public class RegisterGUI extends javax.swing.JFrame {
            //also handles passwordmanagement utilities
            
             loginObj.createLogin(customerID, email, password);
-            customerObj.createCustomer(customerID, firstName, lastName, phoneNumber);
-            addressObj.createCustomerAddress(customerID, address, city, zipcode);
+            int addressID = customerObj.createCustomer(customerID, firstName, lastName, phoneNumber);
+            addressObj.createCustomerAddress(addressID, address, city, zipcode);
             
         } catch (SQLException ex) {
             Logger.getLogger(RegisterGUI.class.getName()).log(Level.SEVERE, null, ex);
